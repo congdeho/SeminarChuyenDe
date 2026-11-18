@@ -23,7 +23,7 @@ Bỏ qua `gh auth login` nếu GitHub CLI đã đăng nhập. Nếu đang ở th
 
 ### 2. Tải checkpoint đã huấn luyện
 
-Gói khoảng **209 MiB** chứa checkpoint E1–E5 và tệp khóa E5. Giải nén từ thư mục gốc dự án để các tệp vào đúng vị trí dưới `runs/`. [Gói checkpoint v0.1.0](https://github.com/congdeho/SeminarChuyenDe/releases/tag/v0.1.0).
+Gói khoảng **193 MiB** chứa checkpoint E1–E5 và tệp khóa E5. Giải nén từ thư mục gốc dự án để các tệp vào đúng vị trí dưới `runs/`. [Gói checkpoint v0.1.0](https://github.com/congdeho/SeminarChuyenDe/releases/tag/v0.1.0).
 
 ```bash
 mkdir -p artifacts
