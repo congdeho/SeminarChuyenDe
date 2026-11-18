@@ -1,0 +1,8 @@
+# Siêu tham số huấn luyện Phase 3 ở configs/train.yaml.
+# Thứ tự nhãn chỉ được định nghĩa trong src/labels.py.
+project_name: seminar-chat-thai-ran
+seed: 42
+image_size: 224
+data_root: data
+artifacts_root: artifacts
+runs_root: runs

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3eb">
+  <title>Phân loại chất thải rắn | Seminar</title>
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="masthead">
+      <div class="brand"><span class="brand-mark" aria-hidden="true">↗</span> Seminar chuyên đề</div>
+      <div class="header-actions">
+        <a class="jump-link" href="#statistics">Thống kê</a>
+        <span class="connection" id="connection">Đang kết nối</span>
+      </div>
+    </header>
+
+    <main>
+      <div class="intro">
+        <h1>Phân loại chất thải rắn</h1>
+        <p>Thử các mô hình phân loại trên ảnh, video hoặc webcam.</p>
+      </div>
+      <div class="workspace">
+        <section class="source panel" aria-labelledby="source-title">
+          <div class="panel-heading source-heading">
+            <h2 id="source-title">Nguồn đầu vào</h2>
+            <div class="modes" role="group" aria-label="Chọn nguồn đầu vào">
+              <button type="button" data-mode="image" aria-pressed="true">Ảnh</button>
+              <button type="button" data-mode="video" aria-pressed="false">Video</button>
+              <button type="button" data-mode="webcam" aria-pressed="false">Webcam</button>
+            </div>
+          </div>
+
+          <div class="stage" id="stage">
+            <div class="empty" id="empty">
+              <span class="target" aria-hidden="true"><i></i></span>
+              <strong id="empty-title">Chọn một ảnh để phân loại</strong>
+              <span id="empty-help">JPEG, PNG hoặc WebP · tối đa 20 MiB</span>
+            </div>
+            <div class="media" id="media" hidden>
+              <img id="preview" alt="Ảnh hoặc khung hình đang phân loại" hidden>
+              <video id="camera" muted autoplay playsinline aria-label="Hình ảnh webcam" hidden></video>
+              <div id="roi" class="roi" hidden></div>
+            </div>
+          </div>
+
+          <div class="source-actions">
+            <input id="file-input" type="file" hidden>
+            <button type="button" class="button primary" id="choose" disabled>Chọn ảnh</button>
+            <button type="button" class="button secondary" id="sample" disabled>Dùng ảnh mẫu</button>
+            <button type="button" class="button primary" id="run" hidden>Phân loại video</button>
+            <button type="button" class="button secondary" id="stop" hidden>Dừng</button>
+          </div>
+          <div class="source-meta">
+            <p id="source-note" role="status" aria-live="polite">Chọn ảnh hoặc dùng ảnh mẫu để thử mô hình.</p>
+            <span id="video-time" hidden></span>
+          </div>
+          <progress id="video-progress" aria-label="Tiến độ phân loại video" max="1" hidden></progress>
+        </section>
+
+        <div class="sidebar">
+          <section class="panel model" aria-labelledby="model-heading">
+            <div class="panel-heading"><h2 id="model-heading">Mô hình</h2></div>
+            <label class="sr-only" for="model">Chọn mô hình để thử</label>
+            <select id="model" disabled><option>Đang tải mô hình…</option></select>
+            <p id="model-note" class="model-note"></p>
+          </section>
+
+          <section class="panel result" aria-labelledby="result-heading">
+            <div class="panel-heading result-heading"><h2 id="result-heading">Kết quả</h2><span id="state" class="state">Chờ dữ liệu</span></div>
+            <div class="headline">
+              <p class="prediction" id="prediction">Chưa phân loại</p>
+              <p class="prediction-detail" id="prediction-detail">Kết quả sẽ hiển thị ở đây.</p>
+              <p class="prediction-detail" id="routing" hidden></p>
+            </div>
+            <div class="score-caption"><span>Điểm theo lớp</span><span id="score-type">Softmax</span></div>
+            <ul id="scores" class="scores" aria-label="Điểm theo lớp của mô hình đang chọn"></ul>
+            <p class="result-footer" id="timing">—</p>
+          </section>
+        </div>
+      </div>
+
+      <section class="panel statistics" id="statistics" aria-labelledby="stats-heading">
+        <div class="panel-heading stats-heading">
+          <h2 id="stats-heading">Thống kê phân loại</h2>
+          <button class="button secondary stats-reset" id="stats-reset" type="button" disabled>Xóa thống kê</button>
+        </div>
+        <div class="stats-filters">
+          <label for="stats-model">Mô hình<select id="stats-model" disabled><option value="all">Tất cả mô hình</option></select></label>
+          <label for="stats-source">Nguồn<select id="stats-source" disabled>
+            <option value="all">Tất cả nguồn</option>
+            <option value="image">Ảnh</option>
+            <option value="video">Video</option>
+            <option value="webcam">Webcam</option>
+          </select></label>
+        </div>
+        <dl class="stats-totals">
+          <div><dt>Đã xử lý</dt><dd id="stats-total">0</dd></div>
+          <div><dt>Có nhãn</dt><dd><span id="stats-accepted">0</span><small id="stats-rate">—</small></dd></div>
+          <div><dt>Chưa chắc chắn</dt><dd><span id="stats-uncertain">0</span><small id="stats-warming">0 đang lấy mẫu</small></dd></div>
+          <div><dt>Suy luận trung bình</dt><dd id="stats-latency">—</dd></div>
+        </dl>
+        <div class="stats-details">
+          <div>
+            <h3>Lượt trả nhãn theo lớp</h3>
+            <ul id="stats-labels" class="scores" aria-label="Số lượt trả nhãn theo lớp"></ul>
+          </div>
+          <div>
+            <h3>So sánh mô hình</h3>
+            <table class="stats-table">
+              <thead><tr><th scope="col">Mô hình</th><th scope="col">Lượt</th><th scope="col">Có nhãn</th><th scope="col">TB (ms)</th></tr></thead>
+              <tbody id="stats-model-rows"></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="stats-note">Mỗi ảnh hoặc khung hình suy luận là một lượt. Cùng một vật có thể được tính ở nhiều khung hình. Thống kê lưu trong tab này.</p>
+      </section>
+    </main>
+    <footer>Ảnh và video được xử lý trên máy này. Webcam chỉ bật khi bạn cấp quyền.</footer>
+  </div>
+</body>
+</html>

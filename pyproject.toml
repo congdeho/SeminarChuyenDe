@@ -1,0 +1,21 @@
+[project]
+name = "seminar-chat-thai-ran"
+version = "0.1.0"
+description = "Phân loại chất thải rắn từ ảnh và webcam cho seminar chuyên đề"
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+    "matplotlib>=3.9,<4",
+    "numpy>=1.26,<3",
+    "opencv-python>=4.10,<5",
+    "pandas>=2.2,<4",
+    "pillow>=10,<13",
+    "pyyaml>=6,<7",
+    "scikit-learn>=1.6,<2",
+    "torch>=2.5,<3",
+    "torchvision>=0.20,<1",
+    "tqdm>=4.66,<5",
+]
+
+[tool.uv]
+package = false

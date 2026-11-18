@@ -1,0 +1,17 @@
+# E1: random CNN baseline; validation only until all options are locked.
+architecture: cnn_baseline
+seed: 42
+image_size: 224
+batch_size: 32
+num_workers: 2
+classifier_epochs: 0
+finetune_epochs: 40
+classifier_lr: 0.001
+finetune_lr: 0.001
+weight_decay: 0.0001
+early_stopping_patience: 5
+scheduler_patience: 2
+scheduler_factor: 0.5
+pretrained_weights: NONE
+use_class_weights: true
+augmentation: true
